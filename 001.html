@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>标题123</title>
+	<meta name="keywords" content="">
+	<meta name="description" content="">
+	<!-- <link rel="stylesheet" href="reset.css"> -->
+	<style>
+		*{margin: 0;padding: 0;}
+		#cvs{
+			border: 1px solid red;
+			background: #ccc;
+		}
+	</style>
+</head>
+<body>
+<canvas id="cvs" width="800" height="500"></canvas>
+<button id="btn">清除</button>
+</body>
+<script type="text/javascript">
+	var cvs = document.getElementById('cvs');
+    var btn = document.getElementById('btn');
+    var bd = document.getElementsByTagName('body')[0];
+    var ctx = cvs.getContext('2d');
+
+    cvs.onmousedown=function (ev) {
+        var e= ev||window.event;
+        var x1 = e.clientX;
+        var y1 = e.clientY+bd.scrollTop;
+        ctx.beginPath();
+        ctx.moveTo(x1,y1);
+        cvs.onmousemove=function (ev) {
+            var e = ev||window.event;
+            var x2 = e.clientX;
+            var y2 = e.clientY+bd.scrollTop;
+            ctx.lineTo(x2,y2);
+            ctx.strokeStyle="red";
+            ctx.lineWidth="3";
+            ctx.stroke();
+        }
+        cvs.onmouseup = function () {
+            cvs.onmousemove = null;
+        }
+        ctx.closePath();
+    };
+
+    btn.onclick = function () {
+        ctx.clearRect(0,0,cvs.width,cvs.height);
+    }
+</script>
+</html>
